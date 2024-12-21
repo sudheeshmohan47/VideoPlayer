@@ -4,7 +4,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 // Enum class representing different sizing options with corresponding dp values
-enum class OnlineStoreSize {
+enum class VideoPlayerSize {
     NONE,
     EXTRA_SMALL,
     SMALL,
@@ -17,24 +17,24 @@ enum class OnlineStoreSize {
 }
 
 /**
- * Extension function to convert OnlineStoreSize to dp
+ * Extension function to convert VideoPlayerSize to dp
  *
  * Usage:
- * val mediumSize: Dp = OnlineStoreSize.MEDIUM.dp()
+ * val mediumSize: Dp = VideoPlayerSize.MEDIUM.dp()
  *
- * @return the corresponding Dp value for the OnlineStoreSize
+ * @return the corresponding Dp value for the VideoPlayerSize
  */
-fun OnlineStoreSize.dp(): Dp =
+fun VideoPlayerSize.dp(): Dp =
     when (this) {
-        OnlineStoreSize.NONE -> 0.dp
-        OnlineStoreSize.EXTRA_SMALL -> 36.dp
-        OnlineStoreSize.SMALL -> 48.dp
-        OnlineStoreSize.MEDIUM -> 56.dp
-        OnlineStoreSize.MEDIUM_PLUS -> 64.dp
-        OnlineStoreSize.LARGE -> 76.dp
-        OnlineStoreSize.XL -> 84.dp
-        OnlineStoreSize.XXL -> 96.dp
-        OnlineStoreSize.XXXL -> 112.dp
+        VideoPlayerSize.NONE -> 0.dp
+        VideoPlayerSize.EXTRA_SMALL -> 36.dp
+        VideoPlayerSize.SMALL -> 48.dp
+        VideoPlayerSize.MEDIUM -> 56.dp
+        VideoPlayerSize.MEDIUM_PLUS -> 64.dp
+        VideoPlayerSize.LARGE -> 76.dp
+        VideoPlayerSize.XL -> 84.dp
+        VideoPlayerSize.XXL -> 96.dp
+        VideoPlayerSize.XXXL -> 112.dp
     }
 
 /**
@@ -45,7 +45,7 @@ fun OnlineStoreSize.dp(): Dp =
  *
  * @property value The scale factor as a float value.
  */
-enum class OnlineStoreScaleSize(val value: Float) {
+enum class VideoPlayerScaleSize(val value: Float) {
     QUARTER(0.25f),
     HALF(0.5f),
     THREE_QUARTERS(0.75f),

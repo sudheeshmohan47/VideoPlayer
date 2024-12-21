@@ -16,7 +16,7 @@ enum class VideoPlayerSpacing {
 
 /**
  * This function returns the Spacing in dp
- * Usage -> OnlineStoreSpacing.MEDIUM.dp()
+ * Usage -> VideoPlayerSpacing.MEDIUM.dp()
  */
 fun VideoPlayerSpacing.dp(): Dp =
     when (this) {

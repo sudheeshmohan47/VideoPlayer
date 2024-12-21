@@ -114,7 +114,7 @@ private fun VideoPlayerCustomAlertDialog(
                 Row {
                     VideoPlayerButton(
                         label = negativeButtonLabel,
-                        variant = OnlineStoreButtonVariant.OUTLINED,
+                        variant = VideoPlayerButtonVariant.OUTLINED,
                         modifier = Modifier.weight(1f),
                         onClick = {
                             onDismiss()
@@ -123,7 +123,7 @@ private fun VideoPlayerCustomAlertDialog(
                     Spacer(modifier = Modifier.width(VideoPlayerSpacing.MEDIUM.dp()))
                     VideoPlayerButton(
                         label = positiveButtonLabel,
-                        variant = OnlineStoreButtonVariant.PRIMARY,
+                        variant = VideoPlayerButtonVariant.PRIMARY,
                         modifier = Modifier.weight(1f),
                         onClick = {
                             onDismiss()

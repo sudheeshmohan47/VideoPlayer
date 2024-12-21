@@ -15,7 +15,7 @@ enum class VideoPlayerTextSpacing {
 
 /**
  * This function returns the Text Spacing in sp
- * Usage -> OnlineStoreSpacing.MEDIUM.sp()
+ * Usage -> VideoPlayerTextSpacing.MEDIUM.sp()
  */
 fun VideoPlayerTextSpacing.sp(): TextUnit =
     when (this) {

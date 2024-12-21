@@ -31,11 +31,7 @@ import com.sample.designsystem.videoplayer.foundation.VideoPlayerPercentage
 import com.sample.designsystem.videoplayer.foundation.VideoPlayerSpacing
 import com.sample.designsystem.videoplayer.foundation.dp
 
-enum class OnlineStoreButtonSizeVariant {
-    SMALL, MEDIUM, LARGE
-}
-
-enum class OnlineStoreButtonVariant {
+enum class VideoPlayerButtonVariant {
     PRIMARY,
     SECONDARY,
     NAKED,
@@ -50,7 +46,7 @@ val RoundedCornerShapeSize = VideoPlayerSpacing.SMALL.dp()
 fun VideoPlayerButton(
     label: String,
     modifier: Modifier = Modifier,
-    variant: OnlineStoreButtonVariant = OnlineStoreButtonVariant.PRIMARY,
+    variant: VideoPlayerButtonVariant = VideoPlayerButtonVariant.PRIMARY,
     buttonHeight: Dp = ButtonHeight,
     buttonBackground: Color? = null,
     buttonTextColor: Color? = null,
@@ -115,17 +111,17 @@ fun VideoPlayerButton(
 }
 
 @Composable
-fun getButtonBackgroundColor(variant: OnlineStoreButtonVariant): Color {
+fun getButtonBackgroundColor(variant: VideoPlayerButtonVariant): Color {
     return when (variant) {
-        OnlineStoreButtonVariant.PRIMARY -> {
+        VideoPlayerButtonVariant.PRIMARY -> {
             MaterialTheme.colorScheme.primary
         }
 
-        OnlineStoreButtonVariant.SECONDARY -> {
+        VideoPlayerButtonVariant.SECONDARY -> {
             MaterialTheme.colorScheme.primary.copy(alpha = VideoPlayerPercentage.PERCENT_10.value)
         }
 
-        OnlineStoreButtonVariant.OUTLINED -> {
+        VideoPlayerButtonVariant.OUTLINED -> {
             MaterialTheme.colorScheme.background
         }
 
@@ -134,17 +130,17 @@ fun getButtonBackgroundColor(variant: OnlineStoreButtonVariant): Color {
 }
 
 @Composable
-fun getButtonTextColor(variant: OnlineStoreButtonVariant): Color {
+fun getButtonTextColor(variant: VideoPlayerButtonVariant): Color {
     return when (variant) {
-        OnlineStoreButtonVariant.PRIMARY -> {
+        VideoPlayerButtonVariant.PRIMARY -> {
             MaterialTheme.colorScheme.onPrimary
         }
 
-        OnlineStoreButtonVariant.SECONDARY -> {
+        VideoPlayerButtonVariant.SECONDARY -> {
             MaterialTheme.colorScheme.primary
         }
 
-        OnlineStoreButtonVariant.OUTLINED -> {
+        VideoPlayerButtonVariant.OUTLINED -> {
             MaterialTheme.colorScheme.primary
         }
 
@@ -153,11 +149,11 @@ fun getButtonTextColor(variant: OnlineStoreButtonVariant): Color {
 }
 
 fun getBorderColorWithAlpha(
-    variant: OnlineStoreButtonVariant,
+    variant: VideoPlayerButtonVariant,
     borderColor: Color,
     enabled: Boolean
 ): Color {
-    return if (variant == OnlineStoreButtonVariant.SECONDARY) {
+    return if (variant == VideoPlayerButtonVariant.SECONDARY) {
         Color.Transparent
     } else {
         borderColor.copy(alpha = if (!enabled) DisabledButtonAlpha else 1F)
@@ -166,12 +162,12 @@ fun getBorderColorWithAlpha(
 
 @Preview(showBackground = true, device = Devices.PIXEL_XL)
 @Composable
-private fun PreviewOnlineStoreButton() {
+private fun PreviewVideoPlayerButton() {
     MaterialTheme {
         Row(modifier = Modifier.padding(16.dp)) {
             VideoPlayerButton(
                 label = "Primary",
-                variant = OnlineStoreButtonVariant.PRIMARY,
+                variant = VideoPlayerButtonVariant.PRIMARY,
                 modifier = Modifier.weight(1f),
                 onClick = {
                 }
@@ -179,7 +175,7 @@ private fun PreviewOnlineStoreButton() {
             Spacer(modifier = Modifier.width(16.dp))
             VideoPlayerButton(
                 label = "Outlined",
-                variant = OnlineStoreButtonVariant.OUTLINED,
+                variant = VideoPlayerButtonVariant.OUTLINED,
                 modifier = Modifier.weight(1f),
                 onClick = {
                 }
@@ -190,6 +186,6 @@ private fun PreviewOnlineStoreButton() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, device = Devices.PIXEL_XL)
 @Composable
-private fun PreviewOnlineStoreButtonDark() {
-    PreviewOnlineStoreButton()
+private fun PreviewVideoPlayerButtonDark() {
+    PreviewVideoPlayerButton()
 }
