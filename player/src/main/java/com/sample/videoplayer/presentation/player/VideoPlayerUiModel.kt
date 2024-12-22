@@ -1,7 +1,5 @@
 package com.sample.videoplayer.presentation.player
 
-import androidx.compose.runtime.remember
-import androidx.media3.common.Player.STATE_ENDED
 import com.sample.videoplayer.commonmodule.domain.model.Message
 import com.sample.videoplayer.commonmodule.foundation.base.Action
 import com.sample.videoplayer.commonmodule.foundation.base.Event
@@ -20,6 +18,7 @@ data class VideoPlayerUiModel(
 
 sealed class VideoPlayerAction : Action {
     data object OnClickBackNavigation : VideoPlayerAction()
+    data object RefreshData : VideoPlayerAction()
     data object OnClickDownload : VideoPlayerAction()
     data object OnClickPlay : VideoPlayerAction()
     data class SetIsPlaying(val isPlaying: Boolean) : VideoPlayerAction()

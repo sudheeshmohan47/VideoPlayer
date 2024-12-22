@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -71,6 +72,11 @@ fun VideoPlayerScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     val exoPlayer = remember {
         createExoPlayer(context, mediaUrl, mediaTitle)
+    }
+
+    LifecycleResumeEffect(Unit) {
+        videoPlayerViewModel.sendAction(VideoPlayerAction.RefreshData)
+        onPauseOrDispose { }
     }
 
     Box(modifier = modifier.fillMaxSize()) {

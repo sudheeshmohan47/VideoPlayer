@@ -1,5 +1,6 @@
 package com.sample.videoplayer.presentation.player.screen
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -46,6 +48,7 @@ import com.sample.designsystem.videoplayer.foundation.dp
 import com.sample.videoplayer.commonmodule.foundation.base.UiState
 import com.sample.videoplayer.commonmodule.utils.formatMinSec
 import com.sample.videoplayer.commonmodule.utils.toMinutesAndSeconds
+import com.sample.videoplayer.domain.model.DownloadStatus
 import com.sample.videoplayer.player.R
 import com.sample.videoplayer.presentation.player.ExoPlayerAction
 import com.sample.videoplayer.presentation.player.VideoPlayerAction
@@ -142,7 +145,6 @@ fun PlayerControlsSection(
 
                     else -> {
                         // play the video
-                        // it's already paused
                         onExoPlayerAction(ExoPlayerAction.Play)
                     }
                 }
@@ -150,7 +152,8 @@ fun PlayerControlsSection(
             },
             onSeekChanged = { timeMs: Float ->
                 onExoPlayerAction(ExoPlayerAction.SeekTo(timeMs.toLong()))
-            }
+            },
+            onAction = onAction
         )
     }
 }
@@ -158,11 +161,12 @@ fun PlayerControlsSection(
 @Composable
 fun PlayerControls(
     videoPlayerUiModel: VideoPlayerUiModel,
-    modifier: Modifier = Modifier,
     onPauseToggle: () -> Unit,
     context: Context = LocalContext.current,
-    onSeekChanged: (timeMs: Float) -> Unit
-) {
+    onSeekChanged: (timeMs: Float) -> Unit,
+    modifier: Modifier = Modifier,
+    onAction: (VideoPlayerAction) -> Unit
+    ) {
     AnimatedVisibility(
         modifier = modifier,
         visible = videoPlayerUiModel.shouldShowControls,
@@ -170,7 +174,6 @@ fun PlayerControls(
         exit = fadeOut()
     ) {
         Box {
-
             CenterControls(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -203,7 +206,9 @@ fun PlayerControls(
                 currentTime = videoPlayerUiModel.currentTime,
                 bufferedPercentage = videoPlayerUiModel.bufferedPercentage,
                 onSeekChanged = onSeekChanged,
-                context = context
+                context = context,
+                videoPlayerUiModel = videoPlayerUiModel,
+                onAction = onAction
             )
         }
     }
@@ -247,14 +252,17 @@ private fun CenterControls(
     }
 }
 
+@SuppressLint("SourceLockedOrientationActivity")
 @Composable
 private fun BottomControls(
+    videoPlayerUiModel: VideoPlayerUiModel,
     totalDuration: Long,
     currentTime: Long,
     bufferedPercentage: Int,
+    onSeekChanged: (timeMs: Float) -> Unit,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
-    onSeekChanged: (timeMs: Float) -> Unit
+    onAction: (VideoPlayerAction) -> Unit
 ) {
     val activity = context as Activity
     val orientation: Int = context.resources.configuration.orientation
@@ -291,18 +299,40 @@ private fun BottomControls(
             )
         }
 
+        val downloadIcon = if (videoPlayerUiModel.downloadStatus == DownloadStatus.DOWNLOADING) {
+            painterResource(id = R.drawable.ic_downloading)
+        } else {
+            painterResource(id = R.drawable.ic_download)
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            // Duration and Current time
             Text(
-                modifier = Modifier.padding(horizontal = VideoPlayerSpacing.MEDIUM.dp()),
+                modifier = Modifier.weight(1f).padding(horizontal = VideoPlayerSpacing.MEDIUM.dp()),
                 text = "${currentTime.toMinutesAndSeconds()} - ${totalDuration.formatMinSec()}",
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.titleMedium
             )
 
+            // Download icon
+            IconButton(
+                modifier = Modifier
+                    .padding(start = VideoPlayerSize.MEDIUM.dp()),
+                onClick = {
+                    onAction(VideoPlayerAction.OnClickDownload)
+                }
+            ) {
+                Icon(
+                    modifier = Modifier.size(VideoPlayerSize.EXTRA_SMALL.dp()),
+                    painter = downloadIcon,
+                    contentDescription = "Download button"
+                )
+            }
+
+            // Full screen icon
             IconButton(
                 modifier = Modifier.padding(start = VideoPlayerSpacing.MEDIUM.dp()),
                 onClick = {
@@ -313,8 +343,8 @@ private fun BottomControls(
                         }
                 }
             ) {
-                Image(
-                    contentScale = ContentScale.Crop,
+                Icon(
+                    modifier = Modifier.size(VideoPlayerSize.EXTRA_SMALL.dp()),
                     painter = fullScreenIcon,
                     contentDescription = "Enter/Exit fullscreen"
                 )
