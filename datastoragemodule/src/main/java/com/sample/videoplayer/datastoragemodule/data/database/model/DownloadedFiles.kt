@@ -13,5 +13,7 @@ data class DownloadedFiles(
     val title: String,
     val url: String,
     val localPath: String = "",
-    val downloadStatus: String
+    val downloadStatus: String,
+    val description: String = "",
+    val thumbnailUrl: String = ""
 )

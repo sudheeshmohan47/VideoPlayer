@@ -9,4 +9,5 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="title_media">Media</string>
+    <string name="title_downloads">Downloads</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import com.sample.videoplayer.foundation.appstate.VideoPlayerAppState
 import com.sample.videoplayer.foundation.navigation.VideoPlayerScreens
 import com.sample.videoplayer.foundation.navigation.navigationmanagers.HomeNavigationManager
+import com.sample.videoplayer.presentation.downloads.screen.DownloadsScreen
 import com.sample.videoplayer.presentation.home.screen.HomeScreen
 import com.sample.videoplayer.presentation.player.screen.VideoPlayerScreen
 
@@ -17,6 +18,8 @@ fun NavGraphBuilder.homeNavGraph(
     homeScreenComposable(homeNavigationManager)
     // Video Player screen
     videoPlayerScreen(homeNavigationManager)
+    // Downloads screen
+    downloadsScreen(homeNavigationManager)
 }
 
 private fun NavGraphBuilder.homeScreenComposable(
@@ -39,6 +42,17 @@ private fun NavGraphBuilder.videoPlayerScreen(
             backToPreviousScreen = homeNavigationManager.backToPreviousScreen,
             mediaTitle = playerScreen.title,
             mediaUrl = playerScreen.url
+        )
+    }
+}
+
+private fun NavGraphBuilder.downloadsScreen(
+    homeNavigationManager: HomeNavigationManager
+) {
+    composable<VideoPlayerScreens.Downloads> {
+        DownloadsScreen(
+            backToPrevScreen = homeNavigationManager.backToPreviousScreen,
+            loadPlayerScreen = homeNavigationManager.loadPlayerScreen
         )
     }
 }

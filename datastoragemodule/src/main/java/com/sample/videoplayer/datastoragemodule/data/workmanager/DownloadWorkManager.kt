@@ -71,7 +71,9 @@ class DownloadWorkManager @AssistedInject constructor(
                                 title = filename,
                                 url = url,
                                 localPath = uri.toString(),
-                                downloadStatus = DownloadStatus.DOWNLOADED.name
+                                downloadStatus = DownloadStatus.DOWNLOADED.name,
+                                description = item.description,
+                                thumbnailUrl = item.thumbnailUrl
                             )
                         )
                     }

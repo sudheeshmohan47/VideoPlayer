@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "543fa6a384ba2c475eee41f0d0d11e87",
+    "identityHash": "2e81c0c2658e02a7e5adcbcbd1a06368",
     "entities": [
       {
         "tableName": "playback_progress",
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "downloaded_files",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `localPath` TEXT NOT NULL, `downloadStatus` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `localPath` TEXT NOT NULL, `downloadStatus` TEXT NOT NULL, `description` TEXT NOT NULL, `thumbnailUrl` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -79,6 +79,18 @@
             "columnName": "downloadStatus",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thumbnailUrl",
+            "columnName": "thumbnailUrl",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -104,7 +116,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '543fa6a384ba2c475eee41f0d0d11e87')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2e81c0c2658e02a7e5adcbcbd1a06368')"
     ]
   }
 }
