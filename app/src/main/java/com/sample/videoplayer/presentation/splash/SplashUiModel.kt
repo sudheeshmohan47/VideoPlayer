@@ -8,7 +8,7 @@ data class SplashUiModel(
 )
 
 sealed class SplashAction : Action {
-    data object UpdateInitialDataStatus: SplashAction()
+    data object UpdateInitialDataStatus : SplashAction()
 }
 
 sealed class SplashEvent : Event

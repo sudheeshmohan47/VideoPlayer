@@ -12,7 +12,7 @@ data class HomeUiModel(
 sealed class HomeAction : Action {
     data object RefreshData : HomeAction()
     data class OnClickMediaFile(val mediaFile: MediaFile) : HomeAction()
-    data object OnClickDownloads: HomeAction()
+    data object OnClickDownloads : HomeAction()
 }
 
 sealed class HomeEvent : Event {

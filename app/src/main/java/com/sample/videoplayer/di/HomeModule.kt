@@ -1,7 +1,6 @@
 package com.sample.videoplayer.di
 
 import android.content.Context
-import androidx.work.WorkManager
 import com.sample.videoplayer.data.downloads.DownloadsService
 import com.sample.videoplayer.data.home.HomeService
 import com.sample.videoplayer.datastoragemodule.data.database.dao.DownloadedFilesDao

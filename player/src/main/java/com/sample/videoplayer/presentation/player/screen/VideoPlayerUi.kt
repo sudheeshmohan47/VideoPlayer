@@ -11,7 +11,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -168,7 +167,7 @@ fun PlayerControls(
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
     onAction: (VideoPlayerAction) -> Unit
-    ) {
+) {
     AnimatedVisibility(
         modifier = modifier,
         visible = videoPlayerUiModel.shouldShowControls,
@@ -314,14 +313,16 @@ private fun BottomControls(
         ) {
             // Duration and Current time
             Text(
-                modifier = Modifier.weight(1f).padding(horizontal = VideoPlayerSpacing.MEDIUM.dp()),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = VideoPlayerSpacing.MEDIUM.dp()),
                 text = "${currentTime.toMinutesAndSeconds()} - ${totalDuration.formatMinSec()}",
                 color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleMedium
             )
 
             // No need to show download button if already downloaded
-            if(videoPlayerUiModel.downloadStatus != DownloadStatus.DOWNLOADED) {
+            if (videoPlayerUiModel.downloadStatus != DownloadStatus.DOWNLOADED) {
                 // Download icon
                 IconButton(
                     modifier = Modifier
@@ -342,11 +343,11 @@ private fun BottomControls(
             IconButton(
                 modifier = Modifier.padding(start = VideoPlayerSpacing.MEDIUM.dp()),
                 onClick = {
-                    if(isPortrait){
-                            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                        } else {
-                            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                        }
+                    if (isPortrait) {
+                        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                    } else {
+                        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                    }
                 }
             ) {
                 Icon(

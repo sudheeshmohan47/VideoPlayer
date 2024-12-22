@@ -14,6 +14,7 @@ val splashViewModelCreationCallback = { factory: SplashViewModel.SplashViewModel
     factory.create()
 }
 const val SPLASH_DELAY = 3000L
+
 @HiltViewModel(assistedFactory = SplashViewModel.SplashViewModelFactory::class)
 class SplashViewModel @AssistedInject constructor(
     @Assisted initialScreenState: UiState<SplashUiModel>
@@ -47,14 +48,14 @@ class SplashViewModel @AssistedInject constructor(
         var returnState = currentState
         when (action) {
             is SplashAction.UpdateInitialDataStatus -> {
-                    returnState =
-                        UiState.Result(
-                            currentState.data?.copy(
-                                initialDataLoaded = true
-                            )
+                returnState =
+                    UiState.Result(
+                        currentState.data?.copy(
+                            initialDataLoaded = true
                         )
-                }
+                    )
             }
+        }
         return returnState
     }
 

@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.sample.videoplayer.commonmodule.domain.model.Message
 import com.sample.videoplayer.commonmodule.foundation.base.BaseViewModel
 import com.sample.videoplayer.commonmodule.foundation.base.UiState
-import com.sample.videoplayer.domain.VideoPlayerUseCase
 import com.sample.videoplayer.datastoragemodule.data.database.domain.model.DownloadStatus
+import com.sample.videoplayer.domain.VideoPlayerUseCase
 import com.sample.videoplayer.player.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

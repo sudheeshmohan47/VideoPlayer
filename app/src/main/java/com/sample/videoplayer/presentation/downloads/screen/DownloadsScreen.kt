@@ -146,7 +146,6 @@ private fun HandleUIStateChanges(
     val loadPlayerScreenState by rememberUpdatedState(loadPlayerScreen)
     val backToPrevScreenState by rememberUpdatedState(backToPrevScreen)
 
-
     LaunchedEffect(Unit) {
         downloadsScreenEvent.collectLatest { event ->
             when (event) {

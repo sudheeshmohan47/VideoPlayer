@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     // Work manager
-    implementation (libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
     // Work manager with Hilt
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)

@@ -27,11 +27,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sample.designsystem.videoplayer.foundation.VideoPlayerSize
 import com.sample.designsystem.videoplayer.foundation.VideoPlayerSpacing
 import com.sample.designsystem.videoplayer.foundation.dp
+import com.sample.videoplayer.R
+import com.sample.videoplayer.commonmodule.foundation.base.UiState
 import com.sample.videoplayer.presentation.splash.SplashUiModel
 import com.sample.videoplayer.presentation.splash.SplashViewModel
 import com.sample.videoplayer.presentation.splash.splashViewModelCreationCallback
-import com.sample.videoplayer.R
-import com.sample.videoplayer.commonmodule.foundation.base.UiState
 
 @Composable
 fun SplashScreen(

@@ -7,9 +7,16 @@ class DownloadsUseCase(private val downloadsRepository: DownloadsRepository) {
     suspend fun loadDownloadedMediaFiles(): DomainResponse<List<MediaFile>> {
         val mediaFiles = downloadsRepository.loadDownloadedMediaFiles().data
         mediaFiles?.let {
-            return DomainResponse(it.map { downloadedFile ->
-                MediaFile(downloadedFile.title, "", downloadedFile.localPath, downloadedFile.description)
-            })
+            return DomainResponse(
+                it.map { downloadedFile ->
+                    MediaFile(
+                        downloadedFile.title,
+                        "",
+                        downloadedFile.localPath,
+                        downloadedFile.description
+                    )
+                }
+            )
         } ?: return DomainResponse(emptyList())
     }
 }
