@@ -11,6 +11,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -71,15 +73,15 @@ fun VideoPlayerTopAppBarSection(
         exit = fadeOut()
     ) {
         VideoPlayerTopAppBar(
-            modifier = modifier,
+            modifier = Modifier.statusBarsPadding(),
             topAppBarState = topAppBarState,
+            backgroundColor = Color.Transparent,
             title = title,
             titleStyle = MaterialTheme.typography.titleLarge,
             titleFontWeight = FontWeight.Normal,
             titleColor = MaterialTheme.colorScheme.onBackground,
             displayBackNavigation = true,
             titleAlignment = TextAlign.Center,
-            backgroundColor = MaterialTheme.colorScheme.background,
             onBackNavigationClicked = {
                 onAction(VideoPlayerAction.OnClickBackNavigation)
             }
