@@ -32,6 +32,7 @@ private fun NavGraphBuilder.videoPlayerScreen(
     homeNavigationManager: HomeNavigationManager
 ) {
     composable<VideoPlayerScreens.VidePlayerScreen> {
-        VideoPlayerScreen()
+
+        VideoPlayerScreen(backToPreviousScreen = homeNavigationManager.backToPreviousScreen)
     }
 }

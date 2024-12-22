@@ -1,6 +1,8 @@
 package com.sample.videoplayer.presentation.player.screen
 
+import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import androidx.annotation.OptIn
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -16,22 +18,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player.STATE_ENDED
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import com.sample.designsystem.videoplayer.components.VideoPlayerTopAppBar
 import com.sample.designsystem.videoplayer.foundation.VideoPlayerSize
 import com.sample.designsystem.videoplayer.foundation.VideoPlayerSpacing
 import com.sample.designsystem.videoplayer.foundation.dp
@@ -42,6 +50,39 @@ import com.sample.videoplayer.player.R
 import com.sample.videoplayer.presentation.player.ExoPlayerAction
 import com.sample.videoplayer.presentation.player.VideoPlayerAction
 import com.sample.videoplayer.presentation.player.VideoPlayerUiModel
+
+@kotlin.OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun VideoPlayerTopAppBarSection(
+    title: String,
+    videoPlayerUiState: UiState<VideoPlayerUiModel>,
+    onAction: (VideoPlayerAction) -> Unit,
+    topAppBarState: TopAppBarState,
+    modifier: Modifier = Modifier,
+) {
+    val showControls = videoPlayerUiState.data?.shouldShowControls ?: true
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = showControls,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        VideoPlayerTopAppBar(
+            modifier = modifier,
+            topAppBarState = topAppBarState,
+            title = title,
+            titleStyle = MaterialTheme.typography.titleLarge,
+            titleFontWeight = FontWeight.Normal,
+            titleColor = MaterialTheme.colorScheme.onBackground,
+            displayBackNavigation = true,
+            titleAlignment = TextAlign.Center,
+            backgroundColor = MaterialTheme.colorScheme.background,
+            onBackNavigationClicked = {
+                onAction(VideoPlayerAction.OnClickBackNavigation)
+            }
+        )
+    }
+}
 
 @OptIn(UnstableApi::class)
 fun createExoPlayer(
@@ -75,18 +116,18 @@ fun createExoPlayer(
 @Composable
 fun PlayerControlsSection(
     videoPlayerUiState: UiState<VideoPlayerUiModel>,
-    mediaTitle: String,
     isExoplayerPlaying: Boolean,
     onExoPlayerAction: (ExoPlayerAction) -> Unit,
     modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
     onAction: (VideoPlayerAction) -> Unit
 ) {
     val videoPlayerUiModel = videoPlayerUiState.data ?: VideoPlayerUiModel()
     Box(modifier = modifier.fillMaxSize()) {
         PlayerControls(
+            context = context,
             modifier = Modifier.fillMaxSize(),
             videoPlayerUiModel = videoPlayerUiModel,
-            title = mediaTitle,
             onPauseToggle = {
                 when {
                     isExoplayerPlaying -> {
@@ -116,10 +157,10 @@ fun PlayerControlsSection(
 
 @Composable
 fun PlayerControls(
-    title: String,
     videoPlayerUiModel: VideoPlayerUiModel,
     modifier: Modifier = Modifier,
     onPauseToggle: () -> Unit,
+    context: Context = LocalContext.current,
     onSeekChanged: (timeMs: Float) -> Unit
 ) {
     AnimatedVisibility(
@@ -129,12 +170,6 @@ fun PlayerControls(
         exit = fadeOut()
     ) {
         Box {
-            TopControl(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .fillMaxWidth(),
-                title = title
-            )
 
             CenterControls(
                 modifier = Modifier
@@ -167,20 +202,11 @@ fun PlayerControls(
                 totalDuration = videoPlayerUiModel.totalDuration,
                 currentTime = videoPlayerUiModel.currentTime,
                 bufferedPercentage = videoPlayerUiModel.bufferedPercentage,
-                onSeekChanged = onSeekChanged
+                onSeekChanged = onSeekChanged,
+                context = context
             )
         }
     }
-}
-
-@Composable
-private fun TopControl(modifier: Modifier = Modifier, title: String) {
-    Text(
-        modifier = modifier.padding(VideoPlayerSpacing.LARGE.dp()),
-        text = title,
-        style = MaterialTheme.typography.headlineMedium,
-        color = MaterialTheme.colorScheme.onSurface
-    )
 }
 
 @Composable
@@ -223,12 +249,21 @@ private fun CenterControls(
 
 @Composable
 private fun BottomControls(
-    modifier: Modifier = Modifier,
     totalDuration: Long,
     currentTime: Long,
     bufferedPercentage: Int,
+    modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
     onSeekChanged: (timeMs: Float) -> Unit
 ) {
+    val activity = context as Activity
+    val orientation: Int = context.resources.configuration.orientation
+    val isPortrait = orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    val fullScreenIcon = if (isPortrait) {
+        painterResource(id = R.drawable.ic_full_screen)
+    } else {
+        painterResource(id = R.drawable.ic_exit_full_screen)
+    }
     Column(modifier = modifier.padding(bottom = VideoPlayerSpacing.EXTRA_LARGE.dp())) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Slider(
@@ -258,8 +293,7 @@ private fun BottomControls(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = VideoPlayerSpacing.MEDIUM.dp()),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -271,11 +305,17 @@ private fun BottomControls(
 
             IconButton(
                 modifier = Modifier.padding(start = VideoPlayerSpacing.MEDIUM.dp()),
-                onClick = {}
+                onClick = {
+                    if(isPortrait){
+                            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                        } else {
+                            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                        }
+                }
             ) {
                 Image(
                     contentScale = ContentScale.Crop,
-                    painter = painterResource(id = R.drawable.ic_full_screen),
+                    painter = fullScreenIcon,
                     contentDescription = "Enter/Exit fullscreen"
                 )
             }

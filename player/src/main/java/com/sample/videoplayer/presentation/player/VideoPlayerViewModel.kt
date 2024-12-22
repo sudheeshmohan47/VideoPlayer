@@ -127,6 +127,10 @@ class VideoPlayerViewModel @AssistedInject constructor(
 
             }
 
+            is VideoPlayerAction.OnClickBackNavigation -> {
+                sendEvent(VideoPlayerEvent.BackToPrevScreen)
+            }
+
             else -> Unit
         }
     }
