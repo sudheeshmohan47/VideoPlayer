@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 val splashViewModelCreationCallback = { factory: SplashViewModel.SplashViewModelFactory ->
     factory.create()
 }
-
+const val SPLASH_DELAY = 3000L
 @HiltViewModel(assistedFactory = SplashViewModel.SplashViewModelFactory::class)
 class SplashViewModel @AssistedInject constructor(
     @Assisted initialScreenState: UiState<SplashUiModel>
@@ -32,7 +32,7 @@ class SplashViewModel @AssistedInject constructor(
         viewModelScope.launch {
             // Here we can do initial loading of data like checking login status
             // App intro shown status etc...
-            delay(3000)
+            delay(SPLASH_DELAY)
             sendAction(SplashAction.UpdateInitialDataStatus)
         }
     }

@@ -46,41 +46,41 @@ class DownloadWorkManager @AssistedInject constructor(
         val filesToDownload = downloadedFilesDao.getFilesToDownload()
 
         if (filesToDownload.isNotEmpty()) {
-            handleDownloadingFiles(filesToDownload)
+            for (item in filesToDownload) {
+                handleDownloadingFiles(item)
+            }
         }
         return Result.success()
     }
 
-    private suspend fun handleDownloadingFiles(filesToDownload: List<DownloadedFiles>) {
-        for (item in filesToDownload) {
-            val mimeType = when (getFileExtensionFromUrl(item.url)) {
-                "mp3" -> "audio/mp3"
-                "mp4" -> "video/mp4"
-                else -> ""
-            }
-            val filename = item.title
-            val url = item.url
-            url.let {
-                try {
-                    val uri = downloadFileFromUri(context = context, url, mimeType, filename)
-                    uri?.let {
-                        // add the downloaded file to the database. This will replace existing with the
-                        // same url
-                        downloadedFilesDao.addDownloadedFile(
-                            DownloadedFiles(
-                                title = filename,
-                                url = url,
-                                localPath = uri.toString(),
-                                downloadStatus = DownloadStatus.DOWNLOADED.name,
-                                description = item.description,
-                                thumbnailUrl = item.thumbnailUrl
-                            )
+    private suspend fun handleDownloadingFiles(fileToDownload: DownloadedFiles) {
+        val mimeType = when (getFileExtensionFromUrl(fileToDownload.url)) {
+            "mp3" -> "audio/mp3"
+            "mp4" -> "video/mp4"
+            else -> ""
+        }
+        val filename = fileToDownload.title
+        val url = fileToDownload.url
+        url.let {
+            try {
+                val uri = downloadFileFromUri(context = context, url, mimeType, filename)
+                uri?.let {
+                    // add the downloaded file to the database. This will replace existing with the
+                    // same url
+                    downloadedFilesDao.addDownloadedFile(
+                        DownloadedFiles(
+                            title = filename,
+                            url = url,
+                            localPath = uri.toString(),
+                            downloadStatus = DownloadStatus.DOWNLOADED.name,
+                            description = fileToDownload.description,
+                            thumbnailUrl = fileToDownload.thumbnailUrl
                         )
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Result.failure()
+                    )
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Result.failure()
             }
         }
     }

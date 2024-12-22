@@ -38,6 +38,5 @@ fun getFileExtensionFromUrl(url: String?): String {
             }
         }
     }
-
     return ""
 }

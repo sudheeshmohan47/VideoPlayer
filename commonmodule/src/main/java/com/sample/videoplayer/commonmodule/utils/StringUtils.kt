@@ -45,6 +45,14 @@ fun Long.formatMinSec(): String {
         )
     }
 }
+
+/**
+ * Converts a duration in milliseconds to a formatted string representing minutes and seconds.
+ *
+ * @receiver Long The duration in milliseconds.
+ * @return A string formatted as "MM:SS" where MM is the number of minutes and SS is the number of seconds.
+ *         Returns "00:00" if the input duration is less than or equal to 0.
+ */
 fun Long.toMinutesAndSeconds(): String {
     if (this <= 0L) return "00:00"
 

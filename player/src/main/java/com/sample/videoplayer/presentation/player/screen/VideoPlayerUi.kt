@@ -164,9 +164,9 @@ fun PlayerControlsSection(
 fun PlayerControls(
     videoPlayerUiModel: VideoPlayerUiModel,
     onPauseToggle: () -> Unit,
-    context: Context = LocalContext.current,
     onSeekChanged: (timeMs: Float) -> Unit,
     modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
     onAction: (VideoPlayerAction) -> Unit
     ) {
     AnimatedVisibility(
@@ -218,9 +218,9 @@ fun PlayerControls(
 
 @Composable
 private fun CenterControls(
-    modifier: Modifier = Modifier,
     isPlaying: Boolean,
     playbackState: Int,
+    modifier: Modifier = Modifier,
     onPauseToggle: () -> Unit,
 ) {
     Row(
@@ -358,7 +358,6 @@ private fun BottomControls(
         }
     }
 }
-
 
 const val PLAYER_SEEK_BACK_INCREMENT = 5 * 1000L // 5 seconds
 const val PLAYER_SEEK_FORWARD_INCREMENT = 10 * 1000L // 10 seconds

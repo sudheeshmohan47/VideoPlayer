@@ -26,5 +26,4 @@ class WorkManagerInitializer : Initializer<WorkManager>, Configuration.Provider 
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
-
 }

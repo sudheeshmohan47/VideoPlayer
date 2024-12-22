@@ -129,10 +129,10 @@ fun VideoPlayerScreenMainContent(
     addListenerToExoPlayer: (Player.Listener) -> Unit,
     removeListenerFromExoPlayer: (Player.Listener) -> Unit,
     releaseExoPlayer: () -> Unit,
+    onExoPlayerAction: (ExoPlayerAction) -> Unit,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
     topAppBarState: TopAppBarState = rememberTopAppBarState(),
-    onExoPlayerAction: (ExoPlayerAction) -> Unit,
     onAction: (VideoPlayerAction) -> Unit
 ) {
     Box(
@@ -167,12 +167,17 @@ fun VideoPlayerContent(
     addListenerToExoPlayer: (Player.Listener) -> Unit,
     removeListenerFromExoPlayer: (Player.Listener) -> Unit,
     releaseExoPlayer: () -> Unit,
+    onExoPlayerAction: (ExoPlayerAction) -> Unit,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
-    onExoPlayerAction: (ExoPlayerAction) -> Unit,
     onAction: (VideoPlayerAction) -> Unit
 ) {
     val shouldShowControls = videoPlayerUiState.data?.shouldShowControls ?: false
+    val onActionState by rememberUpdatedState(onAction)
+    val addListenerToExoPlayerState by rememberUpdatedState(addListenerToExoPlayer)
+    val removeListenerFromExoPlayerState by rememberUpdatedState(removeListenerFromExoPlayer)
+    val releaseExoPlayerState by rememberUpdatedState(releaseExoPlayer)
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -182,7 +187,7 @@ fun VideoPlayerContent(
     ) {
         LaunchedEffect(Unit) {
             while (true) {
-                onAction(
+                onActionState(
                     VideoPlayerAction.SetCurrentTime(exoPlayer.currentPosition.coerceAtLeast(0L))
                 )
                 delay(ONE_SECOND) // Update every second
@@ -196,29 +201,29 @@ fun VideoPlayerContent(
                         events: Player.Events
                     ) {
                         super.onEvents(player, events)
-                        onAction(
+                        onActionState(
                             VideoPlayerAction.SetTotalDuration(
                                 player.duration.coerceAtLeast(
                                     0L
                                 )
                             )
                         )
-                        onAction(
+                        onActionState(
                             VideoPlayerAction.SetCurrentTime(
                                 player.currentPosition.coerceAtLeast(
                                     0L
                                 )
                             )
                         )
-                        onAction(VideoPlayerAction.SetBufferedPercentage(player.bufferedPercentage))
-                        onAction(VideoPlayerAction.SetIsPlaying(player.isPlaying))
-                        onAction(VideoPlayerAction.SetPlaybackState(player.playbackState))
+                        onActionState(VideoPlayerAction.SetBufferedPercentage(player.bufferedPercentage))
+                        onActionState(VideoPlayerAction.SetIsPlaying(player.isPlaying))
+                        onActionState(VideoPlayerAction.SetPlaybackState(player.playbackState))
                     }
                 }
-            addListenerToExoPlayer(listener)
+            addListenerToExoPlayerState(listener)
             onDispose {
-                removeListenerFromExoPlayer(listener)
-                releaseExoPlayer()
+                removeListenerFromExoPlayerState(listener)
+                releaseExoPlayerState()
             }
         }
 

@@ -179,8 +179,7 @@ class VideoPlayerViewModel @AssistedInject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 videoPlayerUseCase.updateDownloadStatus(
                     url = videoUrl,
-                    title = videoTitle,
-                    status = DownloadStatus.DOWNLOADING
+                    title = videoTitle
                 )
             }
         }

@@ -9,6 +9,7 @@ import com.sample.videoplayer.data.model.MediaFileResponse
 import com.sample.videoplayer.domain.home.HomeRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 
+@SuppressWarnings("TooGenericExceptionCaught")
 class HomeService(@ApplicationContext private val context: Context) : HomeRepository {
     override suspend fun loadMediaFiles(): DomainResponse<List<MediaFileResponse>> {
         var domainResponse: DomainResponse<List<MediaFileResponse>>
