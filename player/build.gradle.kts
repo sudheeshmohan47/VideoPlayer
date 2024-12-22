@@ -101,6 +101,9 @@ dependencies {
     implementation(libs.androidx.media3.ui)
     implementation (libs.androidx.media3.common)
 
+    // Work manager
+    implementation (libs.androidx.work.runtime.ktx)
+
     testImplementation (libs.mockk)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

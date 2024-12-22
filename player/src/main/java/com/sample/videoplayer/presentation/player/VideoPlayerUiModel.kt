@@ -3,7 +3,7 @@ package com.sample.videoplayer.presentation.player
 import com.sample.videoplayer.commonmodule.domain.model.Message
 import com.sample.videoplayer.commonmodule.foundation.base.Action
 import com.sample.videoplayer.commonmodule.foundation.base.Event
-import com.sample.videoplayer.domain.model.DownloadStatus
+import com.sample.videoplayer.datastoragemodule.data.database.domain.model.DownloadStatus
 
 data class VideoPlayerUiModel(
     val downloadStatus: DownloadStatus = DownloadStatus.NOT_DOWNLOADED,

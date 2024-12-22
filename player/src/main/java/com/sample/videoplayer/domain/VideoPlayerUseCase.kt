@@ -1,6 +1,6 @@
 package com.sample.videoplayer.domain
 
-import com.sample.videoplayer.domain.model.DownloadStatus
+import com.sample.videoplayer.datastoragemodule.data.database.domain.model.DownloadStatus
 
 class VideoPlayerUseCase(private val videoPlayerRepository: VideoPlayerRepository) {
 

@@ -1,5 +1,6 @@
 package com.sample.videoplayer.di
 
+import androidx.work.WorkManager
 import com.sample.videoplayer.data.VideoPlayerService
 import com.sample.videoplayer.datastoragemodule.data.database.dao.DownloadedFilesDao
 import com.sample.videoplayer.datastoragemodule.data.database.dao.PlaybackProgressDao
@@ -21,9 +22,11 @@ class VideoPlayerModule {
     @Provides
     fun provideVideoPlayerRepository(
         downloadedFilesDao: DownloadedFilesDao,
-        playbackProgressDao: PlaybackProgressDao
+        playbackProgressDao: PlaybackProgressDao,
+        workManager: WorkManager
     ): VideoPlayerRepository {
         return VideoPlayerService(
+            workManager,
             downloadedFilesDao,
             playbackProgressDao
         )

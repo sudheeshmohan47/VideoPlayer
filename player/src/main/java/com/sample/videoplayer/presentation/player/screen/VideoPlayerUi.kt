@@ -48,7 +48,7 @@ import com.sample.designsystem.videoplayer.foundation.dp
 import com.sample.videoplayer.commonmodule.foundation.base.UiState
 import com.sample.videoplayer.commonmodule.utils.formatMinSec
 import com.sample.videoplayer.commonmodule.utils.toMinutesAndSeconds
-import com.sample.videoplayer.domain.model.DownloadStatus
+import com.sample.videoplayer.datastoragemodule.data.database.domain.model.DownloadStatus
 import com.sample.videoplayer.player.R
 import com.sample.videoplayer.presentation.player.ExoPlayerAction
 import com.sample.videoplayer.presentation.player.VideoPlayerAction
@@ -267,6 +267,7 @@ private fun BottomControls(
     val activity = context as Activity
     val orientation: Int = context.resources.configuration.orientation
     val isPortrait = orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
     val fullScreenIcon = if (isPortrait) {
         painterResource(id = R.drawable.ic_full_screen)
     } else {
@@ -317,19 +318,22 @@ private fun BottomControls(
                 style = MaterialTheme.typography.titleMedium
             )
 
-            // Download icon
-            IconButton(
-                modifier = Modifier
-                    .padding(start = VideoPlayerSize.MEDIUM.dp()),
-                onClick = {
-                    onAction(VideoPlayerAction.OnClickDownload)
+            // No need to show download button if already downloaded
+            if(videoPlayerUiModel.downloadStatus != DownloadStatus.DOWNLOADED) {
+                // Download icon
+                IconButton(
+                    modifier = Modifier
+                        .padding(start = VideoPlayerSize.MEDIUM.dp()),
+                    onClick = {
+                        onAction(VideoPlayerAction.OnClickDownload)
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier.size(VideoPlayerSize.EXTRA_SMALL.dp()),
+                        painter = downloadIcon,
+                        contentDescription = "Download button"
+                    )
                 }
-            ) {
-                Icon(
-                    modifier = Modifier.size(VideoPlayerSize.EXTRA_SMALL.dp()),
-                    painter = downloadIcon,
-                    contentDescription = "Download button"
-                )
             }
 
             // Full screen icon

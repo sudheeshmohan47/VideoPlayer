@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fbffd9a9a94cdc73294888548ccab8a8",
+    "identityHash": "543fa6a384ba2c475eee41f0d0d11e87",
     "entities": [
       {
         "tableName": "playback_progress",
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "downloaded_files",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `path` TEXT NOT NULL, `localPath` TEXT NOT NULL, `downloadStatus` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `localPath` TEXT NOT NULL, `downloadStatus` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -63,8 +63,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "path",
-            "columnName": "path",
+            "fieldPath": "url",
+            "columnName": "url",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -89,13 +89,13 @@
         },
         "indices": [
           {
-            "name": "index_downloaded_files_path",
+            "name": "index_downloaded_files_url",
             "unique": true,
             "columnNames": [
-              "path"
+              "url"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_downloaded_files_path` ON `${TABLE_NAME}` (`path`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_downloaded_files_url` ON `${TABLE_NAME}` (`url`)"
           }
         ],
         "foreignKeys": []
@@ -104,7 +104,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fbffd9a9a94cdc73294888548ccab8a8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '543fa6a384ba2c475eee41f0d0d11e87')"
     ]
   }
 }

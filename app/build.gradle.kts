@@ -113,6 +113,10 @@ dependencies {
     // Detekt compose rules
     detektPlugins(libs.detekt)
 
+    // Work manager with Hilt
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
+
     testImplementation (libs.mockk)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

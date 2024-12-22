@@ -7,6 +7,6 @@ import com.sample.videoplayer.foundation.navigation.VideoPlayerScreens
 class StartupNavigationManager(private val appState: VideoPlayerAppState) {
 
     val goToHomeScreen: () -> Unit = {
-        appState.navigateWithPopBackstack(VideoPlayerScreens.VidePlayerScreen)
+        appState.navigateWithPopBackstack(VideoPlayerScreens.HomeScreen)
     }
 }

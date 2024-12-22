@@ -54,12 +54,11 @@ import kotlinx.coroutines.flow.collectLatest
 @kotlin.OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoPlayerScreen(
-    mediaTitle: String = "Big Buck Bunny",
-    mediaUrl: String = "https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",
+    mediaTitle: String,
+    mediaUrl: String,
     backToPreviousScreen: () -> Unit,
     modifier: Modifier = Modifier,
-    videoPlayerViewModel: VideoPlayerViewModel =
-        hiltViewModel<VideoPlayerViewModel,
+    videoPlayerViewModel: VideoPlayerViewModel = hiltViewModel<VideoPlayerViewModel,
                 VideoPlayerViewModel.VideoPlayerViewModelFactory> { factory ->
             factory.create(videoUrl = mediaUrl, videoTitle = mediaTitle)
         }

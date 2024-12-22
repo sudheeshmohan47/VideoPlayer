@@ -2,9 +2,11 @@ package com.sample.videoplayer.foundation.navigation.navgraph
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.sample.videoplayer.foundation.navigation.navigationmanagers.HomeNavigationManager
+import androidx.navigation.toRoute
 import com.sample.videoplayer.foundation.appstate.VideoPlayerAppState
 import com.sample.videoplayer.foundation.navigation.VideoPlayerScreens
+import com.sample.videoplayer.foundation.navigation.navigationmanagers.HomeNavigationManager
+import com.sample.videoplayer.presentation.home.screen.HomeScreen
 import com.sample.videoplayer.presentation.player.screen.VideoPlayerScreen
 
 fun NavGraphBuilder.homeNavGraph(
@@ -21,10 +23,10 @@ private fun NavGraphBuilder.homeScreenComposable(
     homeNavigationManager: HomeNavigationManager
 ) {
     composable<VideoPlayerScreens.HomeScreen> {
-        /*ProductsListingScreen(
-            loadProductDetailScreen = homeNavigationManager.gotoProductsDetailScreen,
-            gotoCartScreen = homeNavigationManager.gotoCartScreen
-        )*/
+        HomeScreen(
+            loadPlayerScreen = homeNavigationManager.loadPlayerScreen,
+            loadDownloadsScreen = homeNavigationManager.loadDownloadsScreen
+        )
     }
 }
 
@@ -32,7 +34,11 @@ private fun NavGraphBuilder.videoPlayerScreen(
     homeNavigationManager: HomeNavigationManager
 ) {
     composable<VideoPlayerScreens.VidePlayerScreen> {
-
-        VideoPlayerScreen(backToPreviousScreen = homeNavigationManager.backToPreviousScreen)
+        val playerScreen = it.toRoute<VideoPlayerScreens.VidePlayerScreen>()
+        VideoPlayerScreen(
+            backToPreviousScreen = homeNavigationManager.backToPreviousScreen,
+            mediaTitle = playerScreen.title,
+            mediaUrl = playerScreen.url
+        )
     }
 }

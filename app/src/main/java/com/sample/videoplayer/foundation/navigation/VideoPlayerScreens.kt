@@ -17,5 +17,5 @@ sealed class VideoPlayerScreens : BaseScreen() {
     data object Downloads : VideoPlayerScreens()
 
     @Serializable
-    data object VidePlayerScreen : VideoPlayerScreens()
+    data class VidePlayerScreen(val url: String, val title: String) : VideoPlayerScreens()
 }

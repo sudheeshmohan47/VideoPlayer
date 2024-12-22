@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "downloaded_files",
-    indices = [Index(value = ["path"], unique = true)]
+    indices = [Index(value = ["url"], unique = true)]
 )
 data class DownloadedFiles(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    val path: String,
+    val url: String,
     val localPath: String = "",
     val downloadStatus: String
 )
