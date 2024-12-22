@@ -98,7 +98,7 @@ fun HomeScreenContent(
                 state = homeListState,
                 modifier = modifier.fillMaxSize().padding(VideoPlayerSpacing.MEDIUM.dp()),
                 contentPadding = PaddingValues(vertical = VideoPlayerSpacing.SMALL.dp()),
-                verticalArrangement = Arrangement.spacedBy(VideoPlayerSpacing.EXTRA_SMALL.dp()),
+                verticalArrangement = Arrangement.spacedBy(VideoPlayerSpacing.MEDIUM.dp()),
             ) {
                 items(mediaItems) { mediaItem ->
                     MediaListItem(
