@@ -1,15 +1,15 @@
 package com.sample.videoplayer
 
 import android.app.Application
-//import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
-//@HiltAndroidApp
+@HiltAndroidApp
 class VideoPlayerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-       /* if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-        }*/
+        }
     }
 }

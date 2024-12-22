@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">VideoPlayer</string>
+    <string name="label_video_player">Video Player\n</string>
+
+    // Exit confirmation Dialog
+    <string name="exit_confirmation_title">Confirm Exit</string>
+    <string name="exit_confirmation_message">Are you sure you want to exit?</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_cancel">Cancel</string>
 </resources>
