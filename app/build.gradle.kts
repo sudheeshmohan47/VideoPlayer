@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":designsystem"))
     implementation(project(":commonmodule"))
     implementation(project(":datastoragemodule"))
+    implementation(project(":player"))
 
     // kotlin core
     implementation(libs.androidx.core.ktx)
