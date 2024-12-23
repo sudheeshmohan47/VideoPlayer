@@ -29,11 +29,13 @@ sealed class VideoPlayerAction : Action {
     data class SetBufferedPercentage(val bufferedPercentage: Int) : VideoPlayerAction()
     data class SetPlaybackState(val playbackState: Int) : VideoPlayerAction()
     data class ToggleFullScreen(val isFullScreen: Boolean) : VideoPlayerAction()
+    data object SaveCurrentProgressToDb : VideoPlayerAction()
 }
 
 sealed class VideoPlayerEvent : Event {
     data object BackToPrevScreen : VideoPlayerEvent()
     data class ShowMessage(val message: Message) : VideoPlayerEvent()
+    data class SeekExoPlayer(val timeMs: Long) : VideoPlayerEvent()
 }
 
 sealed class ExoPlayerAction : Action {

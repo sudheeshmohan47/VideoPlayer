@@ -21,7 +21,7 @@ class VideoPlayerService(
     }
 
     override suspend fun getPlaybackProgress(videoUrlOrPath: String): Long {
-        return 0
+        return playbackProgressDao.getPlaybackProgress(videoUrlOrPath)?.progress ?: 0L
     }
 
     override suspend fun updatePlaybackProgress(videoUrlOrPath: String, progress: Long) {

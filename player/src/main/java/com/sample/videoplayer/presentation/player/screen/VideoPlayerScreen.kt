@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.Player
@@ -73,6 +75,10 @@ fun VideoPlayerScreen(
         onPauseOrDispose { }
     }
 
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+        videoPlayerViewModel.sendAction(VideoPlayerAction.SaveCurrentProgressToDb)
+    }
+
     Box(modifier = modifier.fillMaxSize()) {
         VideoPlayerScreenMainContent(
             topAppBarState = topAppBarState,
@@ -110,7 +116,10 @@ fun VideoPlayerScreen(
             videoPlayerScreenEvent = videoPlayerViewModel.uiEvent,
             snackBarHostState = snackBarHostState,
             backToPreviousScreen = backToPreviousScreen,
-            coroutineScope = coroutineScope
+            coroutineScope = coroutineScope,
+            seeksToExoPlayer = {
+                exoPlayer.seekTo(it)
+            }
         )
     }
 }
@@ -257,10 +266,12 @@ private fun HandleUIStateChanges(
     videoPlayerScreenEvent: Flow<VideoPlayerEvent>,
     snackBarHostState: SnackbarHostState,
     backToPreviousScreen: () -> Unit,
+    seeksToExoPlayer: (Long) -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val context = LocalContext.current
     val backToPreviousScreenState by rememberUpdatedState(backToPreviousScreen)
+    val seeksToExoPlayerState by rememberUpdatedState(seeksToExoPlayer)
 
     LaunchedEffect(Unit) {
         videoPlayerScreenEvent.collectLatest { event ->
@@ -276,6 +287,10 @@ private fun HandleUIStateChanges(
                         coroutineScope = coroutineScope,
                         errorMessage = event.message
                     )
+                }
+
+                is VideoPlayerEvent.SeekExoPlayer -> {
+                    seeksToExoPlayerState(event.timeMs)
                 }
             }
         }

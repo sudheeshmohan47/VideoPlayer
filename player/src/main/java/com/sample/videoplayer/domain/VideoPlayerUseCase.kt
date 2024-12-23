@@ -26,4 +26,8 @@ class VideoPlayerUseCase(private val videoPlayerRepository: VideoPlayerRepositor
             downloadStatus = DownloadStatus.DOWNLOADING.name
         )
     }
+
+    suspend fun updatePlaybackProgress(url: String, currentTime: Long) {
+        videoPlayerRepository.updatePlaybackProgress(url, currentTime)
+    }
 }

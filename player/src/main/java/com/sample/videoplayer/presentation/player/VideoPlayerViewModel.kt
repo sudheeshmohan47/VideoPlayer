@@ -143,6 +143,15 @@ class VideoPlayerViewModel @AssistedInject constructor(
                 loadMediaStatus()
             }
 
+            is VideoPlayerAction.SaveCurrentProgressToDb -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    videoPlayerUseCase.updatePlaybackProgress(
+                        url = videoUrl,
+                        currentTime = currentState.data?.currentTime ?: 0L
+                    )
+                }
+            }
+
             else -> Unit
         }
     }
@@ -161,6 +170,7 @@ class VideoPlayerViewModel @AssistedInject constructor(
                     )
                 )
             )
+            sendEvent(VideoPlayerEvent.SeekExoPlayer(playbackProgress))
         }
     }
 
