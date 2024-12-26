@@ -18,7 +18,7 @@ The following are the tech stack used for this project:
 - **Workmanager**:  Jetpack api used for handling background tasks. Handles downloads and saving the status to the database for tracking. Also handles internet connectivity. 
 
 ## Architecture
-OnlineStoreSample app is structured in a mix of clean architecture, MVVM, and MVI pattern.
+VideoPlayer app is structured in a mix of clean architecture, MVVM, and MVI pattern.
 The whole project is clearly separated in layers - Presentation, Business logic and Data layer.
 
 Project is a combination of multiple MFE's (Micro Front Ends)
